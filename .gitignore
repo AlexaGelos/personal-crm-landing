@@ -1,0 +1,14 @@
+# Secrets: local settings and passwords
+.env
+
+# dependencies
+/node_modules
+
+# build output
+/dist/
+/.astro/
+
+# misc
+.DS_Store
+npm-debug.log*
+.pnpm-debug.log*

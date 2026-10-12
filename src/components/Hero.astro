@@ -1,0 +1,54 @@
+---
+import Badge from "./Badge.astro";
+import CtaButton from "./CtaButton.astro";
+import Logo from "../icons/logo.svg";
+import Search from "../icons/search.svg";
+---
+
+<section class="bg-(image:--glow-hero) px-5 pt-5 pb-18 lg:bg-(image:--glow-hero-lg) lg:px-10 lg:pt-6 lg:pb-30">
+  <div class="mx-auto flex max-w-page flex-col items-center">
+    <header class="flex h-11 w-full items-center lg:h-14">
+      <div class="flex items-center gap-2.5 text-16 font-semibold tracking-logo lg:gap-3 lg:text-18">
+        <Logo class="size-5.5 lg:size-6.5 lg:stroke-logo-lg" aria-hidden="true" />
+        <span>Личная CRM</span>
+      </div>
+    </header>
+
+    <div class="flex flex-col items-center gap-5 pt-11 text-center lg:gap-6 lg:pt-24">
+      <Badge>С компьютера и с телефона</Badge>
+      <h1 class="max-w-190 text-hero font-semibold text-balance lg:max-w-235 lg:text-hero-lg">
+        <span>Не теряйте людей,</span> <span class="text-accent">которых знаете лично</span>
+      </h1>
+      <p class="max-w-130 text-lead text-pretty text-ink-muted lg:max-w-140 lg:text-lead-lg">
+        Личная CRM и путеводитель по вашим контактам. Она помогает помнить людей и то, о чём вы с ними говорили.
+      </p>
+      <CtaButton />
+    </div>
+
+    <div
+      aria-hidden="true"
+      class="mt-12 flex w-full max-w-130 flex-col gap-3 rounded-card border border-line-strong bg-fill p-3 lg:mt-20 lg:max-w-190 lg:gap-3.5 lg:rounded-card-lg lg:p-4 lg:shadow-preview"
+    >
+      <div class="flex h-12.5 items-center gap-2.5 rounded-field border border-line-strong bg-fill-input px-3.5 text-ink-muted lg:h-13.5 lg:gap-3 lg:rounded-inner lg:px-4">
+        <Search class="size-4.5 flex-none" />
+        <span class="text-15 text-ink lg:text-16">Андрей</span>
+      </div>
+
+      <div class="flex flex-col gap-3.5 rounded-inner border border-accent-line bg-card-raised p-4 lg:flex-row lg:flex-wrap lg:items-stretch lg:gap-4 lg:rounded-inner-lg lg:p-5">
+        <div class="flex items-center gap-3 lg:grow lg:basis-60 lg:gap-3.5">
+          <div class="flex size-11 flex-none items-center justify-center rounded-full bg-accent-tint-strong text-17 font-semibold text-accent-soft lg:size-13 lg:text-19">
+            А
+          </div>
+          <div class="flex flex-col gap-0.5 lg:gap-0.75">
+            <div class="text-16 font-semibold lg:text-18">Андрей</div>
+            <div class="text-13 text-ink-muted lg:text-14">Познакомились на конференции</div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1.5 rounded-chip bg-fill px-3.5 py-3 lg:grow lg:basis-83 lg:rounded-field lg:px-4 lg:py-3.5">
+          <div class="text-12 text-ink-muted lg:text-13">Заметка после разговора</div>
+          <div class="text-ui lg:text-ui-lg">Обменялись телефонами, договорились созвониться.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

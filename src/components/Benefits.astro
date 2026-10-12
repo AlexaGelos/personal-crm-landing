@@ -1,0 +1,31 @@
+---
+import Badge from "./Badge.astro";
+import List from "../icons/list.svg";
+import UserCheck from "../icons/user-check.svg";
+import Devices from "../icons/devices.svg";
+
+const benefits = [
+  { icon: List, text: "Все контакты упорядочены и под рукой." },
+  { icon: UserCheck, text: "Не нужно долго вспоминать, откуда вы знаете человека." },
+  { icon: Devices, text: "Удобно пользоваться как с компьютера, так и с телефона." },
+];
+---
+
+<section class="border-t border-line px-5 py-18 lg:px-10 lg:py-30">
+  <div class="mx-auto flex max-w-page flex-col gap-7 lg:gap-10">
+    <Badge as="h2" class="self-start font-medium">Что вы получаете</Badge>
+
+    <div class="grid lg:grid-cols-3 lg:gap-x-10">
+      {
+        benefits.map(({ icon: Icon, text }) => (
+          <div class="flex flex-col gap-4 border-t border-line-benefit py-6 lg:gap-5 lg:py-8">
+            <div class="flex size-12 items-center justify-center rounded-field bg-accent-tint-icon text-accent-soft lg:size-14 lg:rounded-inner">
+              <Icon class="size-5.5 lg:size-6" aria-hidden="true" />
+            </div>
+            <p class="text-benefit font-medium text-pretty lg:text-benefit-lg">{text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

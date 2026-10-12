@@ -1,0 +1,21 @@
+---
+// Pill label with an accent dot. Used as a plain label in the hero
+// and as the section heading (h2) for "Как это работает" and "Что вы получаете".
+// Height includes the border: the mockup renders 32px + 2px border.
+interface Props {
+  as?: "div" | "h2";
+  class?: string;
+}
+
+const { as: Tag = "div", class: className } = Astro.props;
+---
+
+<Tag
+  class:list={[
+    "flex h-8.5 items-center gap-2 rounded-full border border-accent-line-strong bg-accent-tint px-3.5 text-13 text-accent-soft lg:h-9.5 lg:px-4 lg:text-14",
+    className,
+  ]}
+>
+  <span class="size-1.5 rounded-full bg-accent"></span>
+  <span><slot /></span>
+</Tag>

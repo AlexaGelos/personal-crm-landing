@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Problem from "../components/Problem.astro";
+import Steps from "../components/Steps.astro";
+import Benefits from "../components/Benefits.astro";
+import FinalCta from "../components/FinalCta.astro";
+---
+
+<BaseLayout
+  title="Личная CRM"
+  description="Личная CRM и путеводитель по вашим контактам. Она помогает помнить людей и то, о чём вы с ними говорили."
+>
+  <main class="overflow-x-clip">
+    <Hero />
+    <Problem />
+    <Steps />
+    <Benefits />
+    <FinalCta />
+  </main>
+</BaseLayout>
