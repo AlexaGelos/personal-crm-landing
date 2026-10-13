@@ -1,0 +1,66 @@
+# Push to main -> build dist/ -> rsync --delete to the server -> check that the site serves this commit.
+# On the server nginx serves /var/www/landing; the deploy key may only rsync into that folder.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+# Deploys go one after another: a new push never interrupts a running deploy
+concurrency:
+  group: deploy-landing
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  SITE_URL: https://crmgelos.ru
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # pnpm version comes from "packageManager" in package.json; also runs pnpm install
+      - uses: pnpm/setup@v3
+        with:
+          runtime: node@24
+          cache: true
+          require-lockfile: true
+
+      - run: pnpm build
+
+      - name: Add version marker
+        # The check at the end compares it with the pushed commit
+        run: |
+          echo "$GITHUB_SHA" > dist/version.txt
+          chmod -R u=rwX,go=rX dist
+
+      - name: Set up SSH
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ vars.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Upload dist/ to the server
+        env:
+          TARGET: ${{ vars.DEPLOY_USER }}@${{ vars.DEPLOY_HOST }}
+        # --delete-after --delay-updates: new files replace old ones together at the end,
+        # files that are gone from dist/ are removed from the server
+        run: rsync -rlpt -v --delete-after --delay-updates dist/ "$TARGET:"
+
+      - name: Check the site
+        run: |
+          code=$(curl -sS --retry 3 --retry-all-errors -o /dev/null -w '%{http_code}' "$SITE_URL/")
+          echo "$SITE_URL/ -> $code"
+          [ "$code" = 200 ] || { echo "::error::The home page answers $code, expected 200"; exit 1; }
+          version=$(curl -fsS --retry 3 --retry-all-errors "$SITE_URL/version.txt")
+          echo "Version on the site: $version"
+          [ "$version" = "$GITHUB_SHA" ] || { echo "::error::The site serves $version, expected $GITHUB_SHA"; exit 1; }
