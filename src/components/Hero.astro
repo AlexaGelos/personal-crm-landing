@@ -1,17 +1,22 @@
 ---
 import Badge from "./Badge.astro";
 import CtaButton from "./CtaButton.astro";
+import DemonHead from "../icons/demon-head.svg";
 import Logo from "../icons/logo.svg";
 import Search from "../icons/search.svg";
 ---
 
 <section class="bg-(image:--glow-hero) px-5 pt-5 pb-18 lg:bg-(image:--glow-hero-lg) lg:px-10 lg:pt-6 lg:pb-30">
   <div class="mx-auto flex max-w-page flex-col items-center">
-    <header class="flex h-11 w-full items-center lg:h-14">
+    <header class="relative flex h-11 w-full items-center lg:h-14">
       <div class="flex items-center gap-2.5 text-16 font-semibold tracking-logo lg:gap-3 lg:text-18">
         <Logo class="size-5.5 lg:size-6.5 lg:stroke-logo-lg" aria-hidden="true" />
         <span>Личная CRM</span>
       </div>
+      <DemonHead
+        class="absolute left-1/2 size-10 -translate-x-1/2 text-accent drop-shadow-demon lg:size-12"
+        aria-hidden="true"
+      />
     </header>
 
     <div class="flex flex-col items-center gap-5 pt-11 text-center lg:gap-6 lg:pt-24">
