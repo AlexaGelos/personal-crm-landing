@@ -1,4 +1,5 @@
 ---
+import SideFlames from "../components/SideFlames.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -20,6 +21,7 @@ const { title, description } = Astro.props;
     <link rel="preload" href="/fonts/onest-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body class="bg-page font-sans text-ink">
+    <SideFlames />
     <slot />
   </body>
 </html>

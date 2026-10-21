@@ -175,4 +175,18 @@
 
   /* Logo icon line on desktop (the icon file itself uses 1.6) */
   --stroke-width-logo-lg: 1.5;
+
+  /* ---- Added later: demon head in the header and flames along the screen edges ---- */
+  /* The app (personal-crm, src/app/globals.css) has the same values */
+
+  --drop-shadow-demon: 0 0 8px rgb(164 147 255 / 0.55);   /* glow around the demon head */
+  --animate-flame-1: flame-flicker 3.8s ease-in-out infinite;
+  --animate-flame-2: flame-flicker 4.6s ease-in-out -1.6s infinite;
+  --animate-flame-3: flame-flicker 3.2s ease-in-out -0.8s infinite;
+
+  @keyframes flame-flicker {
+    0%, 100% { transform: scaleY(1) skewX(0deg); opacity: 1; }
+    30% { transform: scaleY(0.93) skewX(-3deg); opacity: 0.8; }
+    65% { transform: scaleY(1.04) skewX(2deg); opacity: 0.95; }
+  }
 }
