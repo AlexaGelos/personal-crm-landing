@@ -1,57 +1,110 @@
 ---
-import Badge from "./Badge.astro";
 import CtaButton from "./CtaButton.astro";
+import Chandelier from "./candles/Chandelier.astro";
+import DustMotes from "./candles/DustMotes.astro";
+import StoneWall from "./candles/StoneWall.astro";
+import Tracery from "./candles/Tracery.astro";
+import WallSconce from "./candles/WallSconce.astro";
 import DemonHead from "../icons/demon-head.svg";
 import Logo from "../icons/logo.svg";
 import Search from "../icons/search.svg";
+
+// Wall sconces hang in the empty margin next to the content: their light and stone
+// are centred 835px from the middle of the screen, the sconces themselves 690px.
 ---
 
-<section class="bg-(image:--glow-hero) px-5 pt-5 pb-18 lg:bg-(image:--glow-hero-lg) lg:px-10 lg:pt-6 lg:pb-30">
-  <div class="mx-auto flex max-w-page flex-col items-center">
+<section class="relative overflow-hidden bg-(image:--glow-hero) px-5 pt-5 pb-20 lg:px-10 lg:pt-6 lg:pb-32">
+  <div aria-hidden="true">
+    <Tracery
+      class="absolute top-32 left-1/2 h-225 w-47/50 max-w-150 -translate-x-1/2 [mask-image:linear-gradient(#000_35%,transparent_92%)] lg:top-37.5"
+    />
+
+    {/* Fog drifting over the floor and a low red glow under it */}
+    <div class="absolute top-95 -left-3/25 h-70 w-18/25 rounded-full bg-fog blur-fog motion-safe:animate-fog lg:top-130"></div>
+    <div class="absolute top-140 left-21/50 h-60 w-17/25 rounded-full bg-fog-far blur-fog-far motion-safe:animate-fog-far lg:top-180"></div>
+    <div class="absolute -bottom-40 left-1/2 h-80 w-250 -translate-x-1/2 rounded-full bg-ember-glow blur-ember"></div>
+
+    {/* Light: under the chandelier and around the sconces */}
+    <div
+      class="candle-light absolute -top-10 left-1/2 h-105 w-150 -translate-x-1/2 rounded-full bg-(image:--glow-chandelier) lg:-top-15 lg:h-165 lg:w-275"
+    >
+    </div>
+    <div class="hidden sconce:block">
+      <div
+        class="candle-light absolute top-19.5 left-1/2 -ml-208.75 size-115 rounded-full"
+        style="animation-duration: 4.5s; animation-delay: -1.4s"
+      >
+      </div>
+      <div
+        class="candle-light absolute top-19.5 right-1/2 -mr-208.75 size-115 rounded-full"
+        style="animation-duration: 4.5s; animation-delay: -1.4s"
+      >
+      </div>
+      <StoneWall id="hero-stone-left" class="absolute top-27.5 left-1/2 -ml-208.75 size-115" />
+      <StoneWall id="hero-stone-right" offset={40} class="absolute top-27.5 right-1/2 -mr-208.75 size-115" />
+      <WallSconce id="hero-sconce-left" side="left" class="absolute top-62.5 left-1/2 z-1 -ml-172.5 h-63.75 w-42.5" />
+      <WallSconce id="hero-sconce-right" side="right" class="absolute top-62.5 right-1/2 z-1 -mr-172.5 h-63.75 w-42.5" />
+    </div>
+
+    {/* The chandelier hangs on a chain from the demon's chin */}
+    <Chandelier
+      id="hero-chandelier"
+      fine
+      class="absolute top-14 left-1/2 z-1 h-48.75 w-75 -translate-x-1/2 lg:top-17 lg:h-71.5 lg:w-110"
+    />
+    <DustMotes class="top-20 left-1/2 z-1 h-75 w-90 -translate-x-1/2 lg:top-42.5 lg:h-135 lg:w-195" />
+  </div>
+
+  <div class="relative z-2 mx-auto flex max-w-page flex-col items-center">
     <header class="relative flex h-11 w-full items-center lg:h-14">
-      <div class="flex items-center gap-2.5 text-16 font-semibold tracking-logo lg:gap-3 lg:text-18">
-        <Logo class="size-5.5 lg:size-6.5 lg:stroke-logo-lg" aria-hidden="true" />
+      <div
+        class="flex items-center gap-2 font-heading text-logo font-medium tracking-logo text-heading lg:gap-3 lg:text-logo-lg"
+      >
+        <Logo class="size-5 text-ink-muted lg:size-6" aria-hidden="true" />
         <span>Личная CRM</span>
       </div>
-      <DemonHead
-        class="absolute left-1/2 size-10 -translate-x-1/2 text-accent drop-shadow-demon lg:size-12"
-        aria-hidden="true"
-      />
+      <DemonHead class="absolute left-1/2 size-10 -translate-x-1/2 text-crimson lg:size-10.5" aria-hidden="true" />
     </header>
 
-    <div class="flex flex-col items-center gap-5 pt-11 text-center lg:gap-6 lg:pt-24">
-      <Badge>С компьютера и с телефона</Badge>
-      <h1 class="max-w-190 text-hero font-semibold text-balance lg:max-w-235 lg:text-hero-lg">
-        <span>Не теряйте людей,</span> <span class="text-accent">которых знаете лично</span>
+    <div class="flex flex-col items-center gap-6 pt-46 text-center lg:gap-7 lg:pt-68">
+      <div class="flex items-center gap-2.5 text-11 font-medium tracking-overline text-ink-muted uppercase lg:gap-4 lg:text-12">
+        <span aria-hidden="true" class="h-px w-4 flex-none bg-rule lg:w-10"></span>
+        <span>С компьютера и с телефона</span>
+        <span aria-hidden="true" class="h-px w-4 flex-none bg-rule lg:w-10"></span>
+      </div>
+      <h1 class="max-w-255 font-heading text-hero font-light text-balance text-heading">
+        <span>Не теряйте людей,</span> <span class="text-crimson italic">которых знаете лично</span>
       </h1>
-      <p class="max-w-130 text-lead text-pretty text-ink-muted lg:max-w-140 lg:text-lead-lg">
+      <p class="max-w-135 text-lead font-light text-pretty text-ink-muted lg:text-lead-lg">
         Личная CRM и путеводитель по вашим контактам. Она помогает помнить людей и то, о чём вы с ними говорили.
       </p>
-      <CtaButton />
+      <CtaButton class="mt-2 lg:mt-4" />
     </div>
 
     <div
       aria-hidden="true"
-      class="mt-12 flex w-full max-w-130 flex-col gap-3 rounded-card border border-line-strong bg-fill p-3 lg:mt-20 lg:max-w-190 lg:gap-3.5 lg:rounded-card-lg lg:p-4 lg:shadow-preview"
+      class="mt-16 flex w-full max-w-180 flex-col gap-3 border border-line-field bg-field p-3 shadow-preview lg:mt-28 lg:p-3.5"
     >
-      <div class="flex h-12.5 items-center gap-2.5 rounded-field border border-line-strong bg-fill-input px-3.5 text-ink-muted lg:h-13.5 lg:gap-3 lg:rounded-inner lg:px-4">
-        <Search class="size-4.5 flex-none" />
-        <span class="text-15 text-ink lg:text-16">Андрей</span>
+      <div class="flex h-12 items-center gap-3 border border-line-field bg-page px-4 text-ink-faint lg:h-13">
+        <Search class="size-4.25 flex-none" />
+        <span class="text-16 text-ink">Андрей</span>
       </div>
 
-      <div class="flex flex-col gap-3.5 rounded-inner border border-accent-line bg-card-raised p-4 lg:flex-row lg:flex-wrap lg:items-stretch lg:gap-4 lg:rounded-inner-lg lg:p-5">
-        <div class="flex items-center gap-3 lg:grow lg:basis-60 lg:gap-3.5">
-          <div class="flex size-11 flex-none items-center justify-center rounded-full bg-accent-tint-strong text-17 font-semibold text-accent-soft lg:size-13 lg:text-19">
+      <div class="flex flex-wrap items-stretch gap-4 border border-line-field border-t-blood bg-card-raised p-4 lg:p-4.5">
+        <div class="flex grow basis-55 items-center gap-3.5">
+          <div
+            class="flex size-12 flex-none items-center justify-center rounded-full border border-line-avatar-strong bg-avatar font-heading text-24 text-ink italic"
+          >
             А
           </div>
-          <div class="flex flex-col gap-0.5 lg:gap-0.75">
-            <div class="text-16 font-semibold lg:text-18">Андрей</div>
-            <div class="text-13 text-ink-muted lg:text-14">Познакомились на конференции</div>
+          <div class="flex flex-col gap-0.75">
+            <div class="font-heading text-24 font-medium text-heading">Андрей</div>
+            <div class="text-14 text-ink-muted">Познакомились на конференции</div>
           </div>
         </div>
-        <div class="flex flex-col gap-1.5 rounded-chip bg-fill px-3.5 py-3 lg:grow lg:basis-83 lg:rounded-field lg:px-4 lg:py-3.5">
-          <div class="text-12 text-ink-muted lg:text-13">Заметка после разговора</div>
-          <div class="text-ui lg:text-ui-lg">Обменялись телефонами, договорились созвониться.</div>
+        <div class="flex grow basis-80 flex-col gap-1.5 border border-line bg-field px-4 py-3">
+          <div class="text-11 font-medium tracking-label text-ink-subtle uppercase">Заметка после разговора</div>
+          <div class="text-note">Обменялись телефонами, договорились созвониться.</div>
         </div>
       </div>
     </div>

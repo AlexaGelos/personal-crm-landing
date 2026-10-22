@@ -1,5 +1,5 @@
 ---
-// Decorative tongues of flame along the left and right edges of the screen, behind the content.
+// Decorative tongues of flame along the left and right edges of the screen, behind the content: dim and slow.
 // Each edge has three tongues rising from the bottom and fading out upwards.
 // Drawn for the left edge; the right edge is its mirror copy.
 const sides = [
@@ -9,7 +9,7 @@ const sides = [
 const flicker = "origin-bottom transform-fill";
 ---
 
-<div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 text-accent">
+<div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 text-flame-edge">
   {
     sides.map(({ gradientId, position }) => (
       <svg
@@ -21,8 +21,8 @@ const flicker = "origin-bottom transform-fill";
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stop-color="currentColor" stop-opacity="0" />
-            <stop offset="0.5" stop-color="currentColor" stop-opacity="0.08" />
-            <stop offset="1" stop-color="currentColor" stop-opacity="0.35" />
+            <stop offset="0.5" stop-color="currentColor" stop-opacity="0.05" />
+            <stop offset="1" stop-color="currentColor" stop-opacity="0.28" />
           </linearGradient>
         </defs>
         <path

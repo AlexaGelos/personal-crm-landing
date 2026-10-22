@@ -1,0 +1,45 @@
+---
+// Rare warm specks of dust floating in the chandelier light
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+// Where the motes start, in percent of the area, and how they move: `b` drifts the other way, `s` is smaller
+const MOTES = [
+  { top: 30, left: 22, delay: -1, kind: "" },
+  { top: 55, left: 35, delay: -4, kind: "b" },
+  { top: 22, left: 48, delay: -7, kind: "s" },
+  { top: 48, left: 61, delay: -2.5, kind: "" },
+  { top: 35, left: 74, delay: -9, kind: "b s" },
+  { top: 72, left: 30, delay: -5, kind: "s" },
+  { top: 78, left: 56, delay: -10.5, kind: "" },
+  { top: 64, left: 68, delay: -6, kind: "b" },
+  { top: 40, left: 42, delay: -8, kind: "" },
+  { top: 58, left: 80, delay: -3, kind: "s" },
+  { top: 50, left: 18, delay: -10, kind: "b" },
+  { top: 62, left: 52, delay: -12.5, kind: "b s" },
+  { top: 85, left: 38, delay: -0.5, kind: "" },
+  { top: 20, left: 64, delay: -13, kind: "b" },
+  { top: 40, left: 26, delay: -6.5, kind: "s" },
+  { top: 70, left: 46, delay: -2, kind: "b" },
+];
+---
+
+<div
+  aria-hidden="true"
+  class:list={[
+    "pointer-events-none absolute [mask-image:radial-gradient(ellipse_50%_50%_at_50%_35%,#000_25%,transparent_100%)]",
+    className,
+  ]}
+>
+  {
+    MOTES.map(({ top, left, delay, kind }) => (
+      <span
+        class:list={["dust-mote", kind.includes("b") && "dust-mote-b", kind.includes("s") && "dust-mote-small"]}
+        style={`top: ${top}%; left: ${left}%; animation-delay: ${delay}s`}
+      />
+    ))
+  }
+</div>

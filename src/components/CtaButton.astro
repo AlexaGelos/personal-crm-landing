@@ -1,11 +1,20 @@
 ---
 import ArrowRight from "../icons/arrow-right.svg";
 import { APP_URL } from "../config";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
 ---
 
 <a
   href={APP_URL}
-  class="mt-2 flex h-13.5 items-center gap-2.5 rounded-full bg-accent px-6.5 text-16 font-semibold text-page shadow-cta hover:bg-accent-hover hover:shadow-cta-hover focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-accent lg:mt-3 lg:h-14.5 lg:px-7.5 lg:text-17 lg:shadow-cta-lg lg:hover:shadow-cta-lg-hover"
+  class:list={[
+    "relative flex h-14 items-center gap-3 rounded-edge border border-blood-line bg-blood px-6 text-center text-12 font-medium tracking-caps text-on-blood uppercase shadow-cta transition-colors duration-300 hover:border-blood-line-hover hover:bg-blood-hover focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-glow lg:gap-3.5 lg:px-8 lg:text-13",
+    className,
+  ]}
 >
   <span>Открыть приложение</span>
   <ArrowRight class="size-4.5" aria-hidden="true" />

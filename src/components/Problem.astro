@@ -2,58 +2,67 @@
 import Phone from "../icons/phone.svg";
 import Chat from "../icons/chat.svg";
 
-// Skeleton bar widths in the "Телефон" and "Соцсети" panels
+// Placeholder bar widths in the "Телефон" and "Соцсети" panels
 const panels = [
   { icon: Phone, label: "Телефон", bars: ["w-7/10", "w-1/2", "w-31/50"], shift: "" },
-  { icon: Chat, label: "Соцсети", bars: ["w-11/20", "w-18/25", "w-11/25"], shift: "translate-y-2.5 lg:translate-y-3" },
+  { icon: Chat, label: "Соцсети", bars: ["w-11/20", "w-18/25", "w-11/25"], shift: "translate-y-3.5" },
 ];
 
-// Three identical "Андрей" rows, slightly tilted and shifted
-const rows = ["rotate-row-1", "translate-x-3.5 rotate-row-2 lg:translate-x-4", "translate-x-1 rotate-row-3"];
+// Three identical "Андрей" rows, each one fading further, as if forgotten
+const rows = ["", "opacity-50", "opacity-20 blur-fade"];
 ---
 
-<section class="border-t border-line px-5 py-18 lg:px-10 lg:py-30">
-  <div class="mx-auto flex max-w-page flex-col gap-7 lg:gap-14">
-    <div class="flex flex-col gap-7 lg:flex-row lg:flex-wrap lg:items-end lg:gap-12">
-      <p class="max-w-215 text-story font-medium text-pretty lg:max-w-none lg:grow-999 lg:basis-155 lg:text-story-lg">
-        <span class="text-ink-subtle">Познакомились на конференции, обменялись телефонами, договорились созвониться.</span>{" "}
+<section class="relative overflow-hidden border-t border-line-section px-5 py-20 lg:px-10 lg:py-32">
+  <div aria-hidden="true">
+    <div class="absolute top-10 right-1/25 h-100 w-140 rounded-full bg-(image:--glow-warm) blur-glow"></div>
+    <div class="absolute -bottom-25 left-1/50 h-80 w-160 rounded-full bg-(image:--glow-blood) blur-glow-wide"></div>
+  </div>
+
+  <div class="relative mx-auto flex max-w-page flex-col gap-10 lg:gap-16">
+    <div class="flex flex-wrap items-end gap-8 lg:gap-14">
+      <p class="grow-999 basis-140 font-heading text-story text-pretty">
+        <span class="text-ink-faint">Познакомились на конференции, обменялись телефонами, договорились созвониться.</span>{" "}
         Через полгода в телефоне есть контакт «Андрей», но уже не вспомнить, кто это и о чём шла речь.
       </p>
 
       <div
         aria-hidden="true"
-        class="flex w-full max-w-105 items-center gap-3 rounded-inner-lg border border-line bg-card px-4 py-3.5 lg:w-auto lg:max-w-100 lg:grow lg:basis-80 lg:gap-3.5 lg:rounded-strip-lg lg:px-5 lg:py-4.5"
+        class="flex max-w-95 grow basis-75 items-center gap-3.5 border border-line-panel bg-card px-5 py-4.5"
       >
-        <div class="flex size-11 flex-none items-center justify-center rounded-full bg-fill-avatar text-17 font-semibold text-ink-subtle lg:size-12.5 lg:text-18">
+        <div
+          class="flex size-12 flex-none items-center justify-center rounded-full border border-line-avatar bg-avatar-dim font-heading text-24 text-ink-faint italic"
+        >
           А
         </div>
-        <div class="flex flex-1 flex-col gap-0.5 lg:gap-0.75">
-          <div class="text-16 font-semibold lg:text-18">Андрей</div>
-          <div class="text-13 tracking-mask text-ink-subtle lg:text-14">+7 ••• ••• •• ••</div>
+        <div class="flex flex-1 flex-col gap-0.75">
+          <div class="font-heading text-24 font-medium">Андрей</div>
+          <div class="text-13 tracking-label text-ink-subtle">+7 ••• ••• •• ••</div>
         </div>
-        <div class="flex size-9 flex-none items-center justify-center rounded-full border border-dashed border-accent-line-focus text-16 font-semibold text-accent-soft lg:size-10 lg:text-17">
+        <div
+          class="flex size-9.5 flex-none items-center justify-center rounded-full border border-dashed border-crimson-line font-heading text-22 text-crimson"
+        >
           ?
         </div>
       </div>
     </div>
 
-    <div class="grid gap-3 md:grid-cols-2 lg:gap-4">
-      <article class="flex flex-col gap-5 rounded-card border border-line bg-card p-5.5 lg:flex-row lg:flex-wrap lg:items-center lg:gap-8 lg:rounded-card-lg lg:p-8">
-        <p class="mt-2.5 text-problem font-medium text-pretty lg:mt-0 lg:grow lg:basis-50 lg:text-problem-lg">
+    <div class="grid gap-4 md:grid-cols-2">
+      <article class="flex flex-wrap items-center gap-6 border border-line bg-card p-6 lg:gap-9 lg:p-9">
+        <p class="grow basis-50 font-heading text-problem text-pretty lg:text-problem-lg">
           Контакты разбросаны по телефону и разным социальным сетям.
         </p>
-        <div aria-hidden="true" class="order-first grid grid-cols-2 gap-2.5 lg:order-none lg:grow lg:basis-65">
+        <div aria-hidden="true" class="grid grow basis-65 grid-cols-2 gap-2.5">
           {
             panels.map(({ icon: Icon, label, bars, shift }) => (
-              <div class:list={["flex flex-col gap-2.5 rounded-field border border-line bg-fill p-3 lg:rounded-inner lg:p-3.5", shift]}>
-                <div class="flex items-center gap-1.5 text-12 text-ink-muted">
-                  <Icon class="size-3.5" />
+              <div class:list={["flex flex-col gap-2.75 border border-line-panel bg-well p-3.5", shift]}>
+                <div class="flex items-center gap-1.75 text-10 font-medium tracking-label text-ink-subtle uppercase">
+                  <Icon class="size-3.25" />
                   <span>{label}</span>
                 </div>
                 {bars.map((width) => (
                   <div class="flex items-center gap-2">
-                    <span class="size-5.5 flex-none rounded-full bg-fill-avatar" />
-                    <span class:list={["h-2 rounded-full bg-skeleton", width]} />
+                    <span class="size-5 flex-none rounded-full bg-skeleton-avatar" />
+                    <span class:list={["h-1.75 bg-skeleton", width]} />
                   </div>
                 ))}
               </div>
@@ -62,18 +71,18 @@ const rows = ["rotate-row-1", "translate-x-3.5 rotate-row-2 lg:translate-x-4", "
         </div>
       </article>
 
-      <article class="flex flex-col gap-5 rounded-card border border-line bg-card p-5.5 lg:flex-row lg:flex-wrap lg:items-center lg:gap-8 lg:rounded-card-lg lg:p-8">
-        <p class="text-problem font-medium text-pretty lg:grow lg:basis-50 lg:text-problem-lg">
+      <article class="flex flex-wrap items-center gap-6 border border-line bg-card p-6 lg:gap-9 lg:p-9">
+        <p class="grow basis-50 font-heading text-problem text-pretty lg:text-problem-lg">
           Хаос в контактах с одинаковыми именами.
         </p>
-        <div aria-hidden="true" class="order-first flex flex-col gap-2 lg:order-none lg:grow lg:basis-65">
+        <div aria-hidden="true" class="flex grow basis-65 flex-col gap-2">
           {
-            rows.map((tilt) => (
-              <div class:list={["flex items-center gap-2.5 rounded-chip bg-fill px-3 py-2.5", tilt]}>
-                <span class="flex size-7.5 flex-none items-center justify-center rounded-full bg-fill-avatar text-13 font-semibold text-ink-subtle">
+            rows.map((fade) => (
+              <div class:list={["flex items-center gap-2.5 border border-line-panel bg-well px-3 py-2.5", fade]}>
+                <span class="flex size-7 flex-none items-center justify-center rounded-full border border-line-avatar bg-avatar font-heading text-15 text-ink-muted italic">
                   А
                 </span>
-                <span class="text-14 font-semibold">Андрей</span>
+                <span class="text-14 font-medium">Андрей</span>
               </div>
             ))
           }

@@ -1,61 +1,59 @@
 ---
-import Badge from "./Badge.astro";
+import SectionHeading from "./SectionHeading.astro";
 import Search from "../icons/search.svg";
 
 const steps = [
-  { title: "Открываете — видите всех", text: "Сразу весь список ваших контактов." },
-  { title: "Добавляете человека", text: "Он сразу появляется в списке." },
+  { numeral: "I", title: "Открываете — видите всех", text: "Сразу весь список ваших контактов." },
+  { numeral: "II", title: "Добавляете человека", text: "Он сразу появляется в списке." },
   {
+    numeral: "III",
     title: "Находите и дописываете",
     text: "Ищете по имени, открываете карточку и после разговора дописываете заметку.",
   },
 ];
 
-// Skeleton bar widths for the list illustrations in steps 1 and 2
+// Placeholder bar widths for the list pictures in steps I and II
 const listBars = ["w-29/50", "w-37/50", "w-23/50", "w-33/50"];
 const newContactBars = ["w-16/25", "w-12/25", "w-7/10"];
 ---
 
-<section class="border-t border-line px-5 py-18 lg:px-10 lg:py-30">
-  <div class="mx-auto flex max-w-page flex-col gap-7 lg:gap-10">
-    <Badge as="h2" class="self-start font-medium">Как это работает</Badge>
+<section class="relative overflow-hidden border-t border-line-section px-5 py-20 lg:px-10 lg:py-32">
+  <div class="relative mx-auto flex max-w-page flex-col gap-8 lg:gap-12">
+    <SectionHeading>Как это работает</SectionHeading>
 
-    <div class="grid gap-3 lg:grid-cols-3 lg:gap-4">
+    <div class="grid gap-4 lg:grid-cols-3">
       {
-        steps.map(({ title, text }, index) => (
-          <article class="flex flex-col gap-5 rounded-card border border-line bg-card p-5.5 lg:gap-6 lg:rounded-card-lg lg:p-7">
-            <div class="flex size-9 items-center justify-center rounded-full bg-accent-tint-strong text-15 font-semibold text-accent lg:size-10 lg:text-16">
-              {index + 1}
+        steps.map(({ numeral, title, text }, index) => (
+          <article class="flex flex-col gap-6 border border-line bg-card px-6 pt-7 pb-6 lg:px-7 lg:pt-8 lg:pb-7">
+            <div aria-hidden="true" class="font-heading text-numeral font-light text-crimson lg:text-numeral-lg">
+              {numeral}
             </div>
-            <div class="flex flex-col gap-2">
-              <h3 class="text-step-title font-semibold lg:text-step-title-lg">{title}</h3>
-              <p class="text-step-body text-pretty text-ink-muted lg:text-step-body-lg">{text}</p>
+            <div class="flex flex-col gap-2.5">
+              <h3 class="font-heading text-step-title font-medium text-heading lg:text-step-title-lg">{title}</h3>
+              <p class="text-step-body text-pretty text-ink-muted">{text}</p>
             </div>
 
-            <div
-              aria-hidden="true"
-              class="mt-auto flex flex-col gap-2.5 rounded-inner border border-line bg-fill p-3.5 lg:gap-3 lg:rounded-inner-lg lg:p-4"
-            >
+            <div aria-hidden="true" class="mt-auto flex flex-col gap-3 border border-line bg-well p-4">
               {index === 0 &&
                 listBars.map((width) => (
                   <div class="flex items-center gap-2.5">
-                    <span class="size-6.5 flex-none rounded-full bg-accent-tint-strong lg:size-7" />
-                    <span class:list={["h-2 rounded-full bg-skeleton", width]} />
+                    <span class="size-6.5 flex-none rounded-full border border-line-avatar bg-avatar" />
+                    <span class:list={["h-1.75 bg-skeleton", width]} />
                   </div>
                 ))}
 
               {index === 1 && (
                 <>
-                  <div class="-mx-1.5 -my-1 flex items-center gap-2.5 rounded-chip border border-accent-line-focus bg-accent-tint-icon p-1.5">
-                    <span class="flex size-6.5 flex-none items-center justify-center rounded-full bg-accent text-12 font-semibold text-page lg:size-7">
+                  <div class="-mx-1.5 -my-1.25 flex items-center gap-2.5 border border-blood bg-selected px-1.5 py-1.25">
+                    <span class="flex size-6.5 flex-none items-center justify-center rounded-full bg-blood font-heading text-14 text-on-blood italic">
                       А
                     </span>
-                    <span class="text-14 font-semibold lg:text-15">Андрей</span>
+                    <span class="text-14 font-medium">Андрей</span>
                   </div>
                   {newContactBars.map((width) => (
                     <div class="flex items-center gap-2.5 opacity-70">
-                      <span class="size-6.5 flex-none rounded-full bg-accent-tint-strong lg:size-7" />
-                      <span class:list={["h-2 rounded-full bg-skeleton", width]} />
+                      <span class="size-6.5 flex-none rounded-full border border-line-avatar bg-avatar" />
+                      <span class:list={["h-1.75 bg-skeleton", width]} />
                     </div>
                   ))}
                 </>
@@ -63,15 +61,15 @@ const newContactBars = ["w-16/25", "w-12/25", "w-7/10"];
 
               {index === 2 && (
                 <>
-                  <div class="flex h-9 items-center gap-2 rounded-mini bg-fill-input px-3 text-14 text-ink-muted lg:h-9.5">
-                    <Search class="size-3.75 flex-none" />
+                  <div class="flex h-9 items-center gap-2 border border-line-field bg-page px-3 text-14 text-ink-faint">
+                    <Search class="size-3.5 flex-none" />
                     <span class="text-ink">Андрей</span>
                   </div>
-                  <div class="flex flex-col gap-1 rounded-mini border border-accent-line bg-card-note px-3 py-2.5 lg:px-3.5 lg:py-3">
-                    <span class="text-12 text-ink-muted">Заметка</span>
-                    <span class="flex items-center gap-0.5 text-14 lg:text-15">
+                  <div class="flex flex-col gap-1.25 border border-line-field bg-card-raised px-3.5 py-2.5">
+                    <span class="text-10 font-medium tracking-label text-ink-subtle uppercase">Заметка</span>
+                    <span class="flex items-center gap-0.5 text-14">
                       <span>Договорились созвониться</span>
-                      <span class="h-4 w-0.5 bg-accent lg:h-4.25" />
+                      <span class="h-4 w-px bg-crimson" />
                     </span>
                   </div>
                 </>

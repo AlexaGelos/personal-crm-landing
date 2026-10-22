@@ -1,0 +1,97 @@
+---
+import Candle from "./Candle.astro";
+import CandleDefs from "./CandleDefs.astro";
+import IronDefs from "./IronDefs.astro";
+
+// Tall wrought-iron floor candelabrum with three candles: a tripod foot, a long
+// stem with knots and two curved arms. Stands at the sides of the final block.
+interface Props {
+  /** Unique on the page: names the drawing's gradients */
+  id: string;
+  side: "left" | "right";
+  class?: string;
+}
+
+const { id, side, class: className } = Astro.props;
+
+// The two candelabra differ a little: candles of other heights
+const CANDLES = {
+  left: [
+    { x: 100, top: 92, height: 68, drip: "right", rhythm: 1, flameScale: 1 },
+    { x: 46, top: 120, height: 52, drip: undefined, rhythm: 3, flameScale: 0.92 },
+    { x: 154, top: 128, height: 44, drip: "left", rhythm: 0, flameScale: 0.92 },
+  ],
+  right: [
+    { x: 100, top: 100, height: 60, drip: "left", rhythm: 0, flameScale: 1 },
+    { x: 46, top: 130, height: 42, drip: undefined, rhythm: 2, flameScale: 0.92 },
+    { x: 154, top: 116, height: 56, drip: "right", rhythm: 1, flameScale: 0.92 },
+  ],
+} as const;
+
+const iron = `url(#${id}-iron)`;
+---
+
+<svg
+  aria-hidden="true"
+  viewBox="0 0 200 600"
+  class:list={[
+    "pointer-events-none overflow-visible [mask-image:linear-gradient(#000_30%,rgb(0_0_0/0.25)_100%)]",
+    className,
+  ]}
+>
+  <defs>
+    <CandleDefs id={id} />
+    <IronDefs id={id} />
+  </defs>
+
+  {/* Arms */}
+  <path
+    d="M100 236C78 236 54 226 48 200C46 192 46 186 46 182M100 236C122 236 146 226 152 200C154 192 154 186 154 182"
+    fill="none"
+    style="stroke: var(--iron-shade)"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+  <path
+    d="M70 233C60 240 59 252 68 257M130 233C140 240 141 252 132 257"
+    fill="none"
+    style="stroke: var(--iron-shade)"
+    stroke-width="2.4"
+    stroke-linecap="round"
+  />
+
+  {/* Stem with knots and the tripod foot */}
+  <path d="M97.5 170H102.5L104 520H96Z" fill={iron} />
+  <ellipse cx="100" cy="236" rx="8" ry="6" fill={iron} />
+  <ellipse cx="100" cy="330" rx="6.5" ry="10" fill={iron} />
+  <ellipse cx="100" cy="452" rx="9" ry="5.5" fill={iron} />
+  <path
+    d="M100 512C94 534 78 560 52 578C46 582 47 590 54 589C70 586 88 572 97 556L100 548L103 556C112 572 130 586 146 589C153 590 154 582 148 578C122 560 106 534 100 512Z"
+    fill={iron}
+  />
+  <path d="M97.5 548H102.5L104.5 597H95.5Z" fill={iron} />
+
+  {/* Drip pans and candle cups */}
+  <path d="M84 170H116L111 177H89Z" fill={iron} />
+  <path d="M33 182H59L55 188H37Z" fill={iron} />
+  <path d="M141 182H167L163 188H145Z" fill={iron} />
+  <rect x="94" y="160" width="12" height="10" fill={iron} />
+  <rect x="40" y="172" width="12" height="10" fill={iron} />
+  <rect x="148" y="172" width="12" height="10" fill={iron} />
+  {/* Candlelight on the drip pans */}
+  <path d="M87 170H113M36 182H56M144 182H164" style="stroke: var(--rim-light)" stroke-width="0.8" />
+
+  {
+    CANDLES[side].map((candle) => (
+      <Candle
+        id={id}
+        x={candle.x}
+        top={candle.top}
+        height={candle.height}
+        drip={candle.drip}
+        rhythm={candle.rhythm}
+        flameScale={candle.flameScale}
+      />
+    ))
+  }
+</svg>
