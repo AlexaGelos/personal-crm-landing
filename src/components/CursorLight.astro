@@ -1,0 +1,76 @@
+---
+// The candle the mouse carries: soft warm light around the cursor, over everything on the
+// page. It flickers like the other candles (`candle-light`, see global.css).
+// Only for a mouse: phones and tablets get no light. With reduced motion the light stays
+// right under the cursor and does not flicker.
+---
+
+<div
+  id="cursor-light"
+  aria-hidden="true"
+  class="pointer-events-none fixed top-0 left-0 z-30 opacity-0 mix-blend-screen transition-opacity duration-700 data-lit:opacity-100"
+>
+  <div class="candle-light absolute size-90 -translate-1/2 rounded-full bg-(image:--glow-cursor)"></div>
+</div>
+
+<script>
+  // How the light trails the mouse: in this many milliseconds it covers about two thirds
+  // of the way left, like a candle carried in a hand
+  const LAG_MS = 70;
+
+  function carryCandle(light: HTMLElement) {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    let target = { x: 0, y: 0 };
+    let at = target;
+    let frame = 0;
+    let lastTime = 0;
+
+    const place = () => {
+      light.style.transform = `translate3d(${at.x}px, ${at.y}px, 0)`;
+    };
+
+    const follow = (time: number) => {
+      const share = reducedMotion.matches ? 1 : 1 - Math.exp(-Math.max(time - lastTime, 0) / LAG_MS);
+      lastTime = time;
+      at = { x: at.x + (target.x - at.x) * share, y: at.y + (target.y - at.y) * share };
+      if (Math.abs(target.x - at.x) < 0.5 && Math.abs(target.y - at.y) < 0.5) {
+        at = target;
+        frame = 0;
+      } else {
+        frame = requestAnimationFrame(follow);
+      }
+      place();
+    };
+
+    document.addEventListener(
+      "pointermove",
+      (event) => {
+        if (event.pointerType !== "mouse") return;
+        target = { x: event.clientX, y: event.clientY };
+        // The light comes on where the mouse enters, it does not fly in from where it went out
+        if (!light.hasAttribute("data-lit")) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+          at = target;
+          place();
+          light.setAttribute("data-lit", "");
+          return;
+        }
+        if (!frame) {
+          lastTime = performance.now();
+          frame = requestAnimationFrame(follow);
+        }
+      },
+      { passive: true },
+    );
+
+    // Nothing to go to: the mouse has left the window
+    document.addEventListener("mouseout", (event) => {
+      if (!event.relatedTarget) light.removeAttribute("data-lit");
+    });
+  }
+
+  const light = document.getElementById("cursor-light");
+  if (light) carryCandle(light);
+</script>

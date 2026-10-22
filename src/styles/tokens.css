@@ -166,6 +166,8 @@
   --glow-chandelier: radial-gradient(closest-side, rgb(255 160 80 / 0.16), rgb(255 120 50 / 0.05) 55%, rgb(255 120 50 / 0));
   /* Warm light around a candle holder */
   --glow-candle: radial-gradient(closest-side, rgb(255 160 80 / 0.2), rgb(255 120 50 / 0.06) 50%, rgb(255 120 50 / 0));
+  /* Light of the candle the mouse carries (src/components/CursorLight.astro): it lies over the page, so it is dimmer than the light on the walls */
+  --glow-cursor: radial-gradient(closest-side, rgb(255 160 80 / 0.14), rgb(255 120 50 / 0.045) 50%, rgb(255 120 50 / 0));
   /* Far-off candlelight and a blood-red glow in the corners of sections */
   --glow-warm: radial-gradient(closest-side, rgb(220 130 50 / 0.13), rgb(220 130 50 / 0));
   --glow-blood: radial-gradient(closest-side, rgb(138 20 38 / 0.2), rgb(138 20 38 / 0));
@@ -174,6 +176,10 @@
   --glow-cta: radial-gradient(70% 90% at 50% 100%, rgb(120 50 20 / 0.24) 0%, rgb(17 15 15 / 0) 70%);
   /* Film grain over the whole page: a small noise tile */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* Gothic mouse cursors (public/cursors), hotspot at the tip; over buttons and links the arrow warms up */
+  --cursor-arrow: url("/cursors/arrow.svg") 4 4, default;
+  --cursor-hand: url("/cursors/hand.svg") 4 4, pointer;
 
   /* Flames along the screen edges: slow smouldering */
   --animate-flame-1: flame-smoulder 7s ease-in-out infinite;
