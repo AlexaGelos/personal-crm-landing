@@ -1,0 +1,61 @@
+---
+// One burning candle inside a candle holder drawing that has <CandleDefs id={id}> in its <defs>.
+
+// Durations and delays of the flame sway and the halo flicker; candles next to
+// each other take different rhythms so they never move in step
+const RHYTHMS = [
+  { flame: "2.1s", flameDelay: "0s", halo: "2.4s", haloDelay: "0s" },
+  { flame: "2.6s", flameDelay: "-0.7s", halo: "3.1s", haloDelay: "-1s" },
+  { flame: "1.9s", flameDelay: "-1.1s", halo: "2.1s", haloDelay: "-0.5s" },
+  { flame: "3s", flameDelay: "-0.3s", halo: "3.5s", haloDelay: "-1.6s" },
+] as const;
+
+interface Props {
+  /** Same id as the drawing's <CandleDefs> */
+  id: string;
+  /** Centre of the candle */
+  x: number;
+  /** Top of the wax, where the flame stands */
+  top: number;
+  height: number;
+  width?: number;
+  flameScale?: number;
+  rhythm?: 0 | 1 | 2 | 3;
+  /** Draw a wax drip down the right or left side */
+  drip?: "left" | "right";
+}
+
+const { id, x, top, height, width = 9, flameScale = 1, rhythm = 0, drip } = Astro.props;
+const timing = RHYTHMS[rhythm];
+const left = x - width / 2;
+const dripX = drip === "left" ? left + 1.3 : left + width - 1.3;
+const scale = flameScale === 1 ? undefined : `scale(${flameScale})`;
+---
+
+<rect x={left} y={top} width={width} height={height} rx="0.8" fill={`url(#${id}-wax)`} />
+<rect x={left} y={top} width={width} height={height} rx="0.8" fill={`url(#${id}-wax-lit)`} />
+<ellipse cx={x} cy={top + 0.4} rx={width / 2} ry="1.2" style="fill: var(--wax-top)" fill-opacity="0.8" />
+{
+  drip && (
+    <path
+      d={`M${dripX} ${top + 0.5}C${dripX + 0.4} ${top + 4} ${dripX} ${top + 8} ${dripX + 0.4} ${top + 12}`}
+      fill="none"
+      style="stroke: var(--wax-drip)"
+      stroke-width="1.1"
+      stroke-linecap="round"
+      stroke-opacity="0.7"
+    />
+  )
+}
+<g transform={`translate(${x} ${top - 1})`}>
+  <circle
+    class="candle-halo"
+    cy={-12 * flameScale}
+    r={26 * flameScale}
+    fill={`url(#${id}-halo)`}
+    style={`animation-duration: ${timing.halo}; animation-delay: ${timing.haloDelay}`}
+  />
+  <g class="candle-flame" style={`animation-duration: ${timing.flame}; animation-delay: ${timing.flameDelay}`}>
+    <use href={`#${id}-fx`} transform={scale} />
+  </g>
+</g>

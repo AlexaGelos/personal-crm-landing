@@ -1,0 +1,35 @@
+---
+// Faint outline of a gothic window behind a heading: a pointed arch, two inner
+// lancets and a rose. `simple` leaves out the cross in the rose and the mullions.
+interface Props {
+  class?: string;
+  simple?: boolean;
+}
+
+const { class: className, simple = false } = Astro.props;
+---
+
+<svg
+  aria-hidden="true"
+  viewBox="0 0 200 300"
+  preserveAspectRatio="xMidYMin meet"
+  fill="none"
+  stroke-width="1"
+  style="stroke: var(--tracery)"
+  class:list={["pointer-events-none", className]}
+>
+  <path d="M10 300V120C10 60 60 18 100 4C140 18 190 60 190 120V300" vector-effect="non-scaling-stroke" />
+  <path d="M18 300V122C18 66 64 27 100 13C136 27 182 66 182 122V300" vector-effect="non-scaling-stroke" />
+  <path d="M26 300V150C26 116 44 94 62 86C80 94 98 116 98 150V300" vector-effect="non-scaling-stroke" />
+  <path d="M102 300V150C102 116 120 94 138 86C156 94 174 116 174 150V300" vector-effect="non-scaling-stroke" />
+  <circle cx="100" cy="58" r="24" vector-effect="non-scaling-stroke" />
+  <circle cx="100" cy="58" r="9" vector-effect="non-scaling-stroke" />
+  {
+    !simple && (
+      <>
+        <path d="M100 34V49M100 67V82M76 58H91M109 58H124" vector-effect="non-scaling-stroke" />
+        <path d="M62 86V300M138 86V300" vector-effect="non-scaling-stroke" />
+      </>
+    )
+  }
+</svg>

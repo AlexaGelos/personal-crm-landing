@@ -1,0 +1,40 @@
+---
+// Old stone masonry that shows only in the circle of light around a candle holder
+interface Props {
+  /** Unique on the page: names the pattern */
+  id: string;
+  class?: string;
+  /** Shifts the stones, so the two walls do not look copied */
+  offset?: number;
+}
+
+const { id, class: className, offset = 0 } = Astro.props;
+---
+
+<svg
+  aria-hidden="true"
+  class:list={[
+    "pointer-events-none [mask-image:radial-gradient(closest-side,rgb(0_0_0/0.9),rgb(0_0_0/0.35)_55%,transparent_100%)]",
+    className,
+  ]}
+>
+  <defs>
+    <pattern id={id} x={offset} width="160" height="72" patternUnits="userSpaceOnUse">
+      <rect width="160" height="72" style="fill: var(--stone)" />
+      <path
+        d="M0 1H160M0 37H160M1 0V36M59 0V36M113 0V36M31 36V72M93 36V72M141 36V72"
+        fill="none"
+        style="stroke: var(--stone-mortar)"
+        stroke-width="2"
+      />
+      {/* Top edges of the stones catch the light */}
+      <path
+        d="M2 2.5H58M60 2.5H112M114 2.5H160M0 38.5H30M32 38.5H92M94 38.5H140M142 38.5H160"
+        fill="none"
+        style="stroke: var(--stone-lit)"
+        stroke-width="1"
+      />
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill={`url(#${id})`} />
+</svg>

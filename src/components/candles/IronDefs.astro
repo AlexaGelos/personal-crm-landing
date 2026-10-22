@@ -1,0 +1,17 @@
+---
+// Horizontal iron gradient for candle holder drawings: dark edges and a warm lit middle, like a round bar
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const stop = (token: string) => `stop-color: var(--${token})`;
+---
+
+<linearGradient id={`${id}-iron`} x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" style={stop("iron-dark")} />
+  <stop offset="0.38" style={stop("iron")} />
+  <stop offset="0.52" style={stop("iron-light")} />
+  <stop offset="0.68" style={stop("iron-shade")} />
+  <stop offset="1" style={stop("iron-edge")} />
+</linearGradient>

@@ -1,15 +1,15 @@
 /*
-  Design tokens: Personal CRM landing, variant B ("Dusk").
-  Copy this file to src/styles/tokens.css and import it right after
-  `@import "tailwindcss";` in the global stylesheet.
+  Design tokens: Personal CRM landing, theme "Candlelight" - a dark gothic room
+  lit by candles. The look comes from the "Личная CRM — готика" canvas,
+  variant 2 (https://claude.ai/artifact/9sscRvrcVZbDizbX8abRA8). The app
+  (personal-crm, src/app/globals.css) uses the same colors.
 
-  Values come from design/landing-mobile.html (390px) and
-  design/landing-desktop.html (1440px). Pairs named `*-lg` are the desktop
-  values and apply from the `lg` breakpoint (64rem / 1024px).
-  Near-identical alpha values from the mockup are merged (noted per token).
+  The canvas is drawn at 1440px. Pairs named `*-lg` are the desktop values
+  and apply from the `lg` breakpoint (64rem / 1024px); the plain names are
+  for phones.
 
-  Tailwind's default colors, type sizes, fonts, radii, shadows and container
-  widths are switched off below, so markup can only use the values from
+  Tailwind's default colors, type sizes, fonts, radii, shadows, blurs and
+  container widths are switched off below, so markup can only use the values from
   this file.
 */
 
@@ -20,173 +20,229 @@
   --radius-*: initial;
   --shadow-*: initial;
   --container-*: initial;
+  --blur-*: initial;
 
   /* Spacing step: p-1 = 4px, p-5 = 20px, p-5.5 = 22px */
   --spacing: 0.25rem;
 
-  /* Font: Onest 400 / 500 / 600, Cyrillic + Latin */
+  /* Wall sconces, stone and floor candelabra show from this width: narrower screens have no room for them */
+  --breakpoint-sconce: 73.75rem; /* 1180px */
+
+  /* Fonts: Onest for text and labels, Cormorant Garamond for headings, names and numerals */
   --font-sans: "Onest", "Segoe UI", Arial, sans-serif;
+  --font-heading: "Cormorant Garamond", Georgia, serif;
 
   /* Surfaces */
-  --color-page: #0d0a18;          /* page background; also text on accent buttons */
-  --color-card: #15112a;          /* cards, final CTA panel, contact strip */
-  --color-card-raised: #17132a;   /* contact card in the hero preview */
-  --color-card-note: #1c1735;     /* note field in step 3 illustration */
+  --color-page: #0c0b0b;          /* night: page background */
+  --color-card: #121010;          /* crypt: cards, contact strip */
+  --color-panel: #110f0f;         /* final CTA panel */
+  --color-field: #100e0e;         /* hero preview window, note box */
+  --color-card-raised: #141212;   /* contact card in the hero preview, note in step III */
+  --color-well: #0e0c0c;          /* pictures inside the cards */
+  --color-avatar: #1d1a19;        /* avatar circles */
+  --color-avatar-dim: #181615;    /* the forgotten "Андрей" */
+  --color-skeleton-avatar: #1f1b1a;
+  --color-skeleton: #262221;      /* placeholder bars */
+  --color-selected: #170f10;      /* the new contact in step II */
 
   /* Text */
-  --color-ink: #f4f2ff;           /* main text */
-  --color-ink-muted: #b9b3d6;     /* secondary text, labels */
-  --color-ink-subtle: #8e87ad;    /* first half of the problem story, masked phone, grey avatar letters */
+  --color-heading: #e3dbcf;       /* headings, names, logo */
+  --color-ink: #d9d1c5;           /* bone: main text */
+  --color-ink-muted: #948a80;     /* ash: secondary text, labels, icons */
+  --color-ink-subtle: #857c73;    /* masked phone, labels inside pictures */
+  --color-ink-faint: #6f6862;     /* first half of the story, search icons, the forgotten "А" */
 
-  /* Accent */
-  --color-accent: #a493ff;        /* buttons, highlighted words, dots, step numbers, caret */
-  --color-accent-soft: #d9d3ff;   /* text and icons on accent-tinted chips */
+  /* Accent: dried blood */
+  --color-blood: #5c0e18;         /* buttons, the new contact's avatar */
+  --color-blood-hover: #6d1420;
+  --color-blood-line: #7d1a26;    /* button border */
+  --color-blood-line-hover: #8e2430;
+  --color-on-blood: #ece4d8;      /* text on buttons */
+  --color-crimson: #b44a56;       /* demon, italic accent words, step numerals, caret */
+  --color-crimson-line: rgb(180 74 86 / 0.6); /* dashed "?" circle */
+  --color-glow: #ffaa64;          /* keyboard focus outline: candlelight */
 
-  /* Translucent fills and lines (white) */
-  --color-fill: rgb(255 255 255 / 0.04);          /* inner panels, note boxes */
-  --color-fill-input: rgb(255 255 255 / 0.05);    /* search fields */
-  --color-fill-avatar: rgb(255 255 255 / 0.08);   /* grey avatars (mockup: 0.08-0.10) */
-  --color-skeleton: rgb(255 255 255 / 0.13);      /* skeleton bars (mockup: 0.12-0.14) */
-  --color-line: rgb(255 255 255 / 0.07);          /* card borders, section dividers (mockup: 0.06-0.07) */
-  --color-line-strong: rgb(255 255 255 / 0.09);   /* preview panel and search borders (mockup: 0.08-0.09) */
-  --color-line-benefit: rgb(255 255 255 / 0.1);   /* dividers above benefit items */
+  /* Lines */
+  --color-line: #221f1e;          /* card borders, rules next to section headings */
+  --color-line-section: #1d1a19;  /* dividers between sections */
+  --color-line-field: #2a2625;    /* search fields, preview window, lines above benefits */
+  --color-line-panel: #262221;    /* panels and rows inside pictures, contact strip */
+  --color-line-avatar: #332e2c;   /* avatar circles */
+  --color-line-avatar-strong: #3d3836; /* avatar in the hero preview */
+  --color-rule: #4a4441;          /* short lines around the hero overline */
 
-  /* Translucent fills and lines (accent) */
-  --color-accent-tint: rgb(164 147 255 / 0.1);    /* badge background (mockup: 0.10-0.12) */
-  --color-accent-tint-icon: rgb(164 147 255 / 0.12); /* benefit icon tiles, highlighted row */
-  --color-accent-tint-strong: rgb(164 147 255 / 0.18); /* accent avatars, step numbers (mockup: 0.16-0.20) */
-  --color-accent-line: rgb(164 147 255 / 0.2);    /* accent card borders (mockup: 0.20-0.22) */
-  --color-accent-line-strong: rgb(164 147 255 / 0.35); /* badge border */
-  --color-accent-line-focus: rgb(164 147 255 / 0.5);   /* highlighted list row, dashed "?" circle (0.55) */
+  /* Flames along the screen edges */
+  --color-flame-edge: #7a1622;
+
+  /* Atmosphere: fog drifting over the hero and a low red glow under it */
+  --color-fog: rgb(150 132 118 / 0.07);
+  --color-fog-far: rgb(150 132 118 / 0.06);
+  --color-ember-glow: rgb(110 14 26 / 0.2);
 
   /* Type scale: font-size, line-height, letter-spacing */
-  --text-caption: 0.8125rem;                 /* 13px: badge, contact meta */
-  --text-caption--line-height: 1.4;
-  --text-ui: 0.9375rem;                      /* 15px: inputs and notes inside illustrations */
-  --text-ui--line-height: 1.45;
-  --text-ui-lg: 1rem;                        /* 16px: added during build, desktop note in hero preview */
-  --text-ui-lg--line-height: 1.45;
-
-  --text-lead: 1rem;                         /* 16px: hero and CTA paragraph */
-  --text-lead--line-height: 1.55;
-  --text-lead-lg: 1.125rem;                  /* 18px */
-  --text-lead-lg--line-height: 1.55;
-
-  --text-step-title: 1.25rem;                /* 20px */
-  --text-step-title--line-height: 1.3;
-  --text-step-title--letter-spacing: -0.01em;
-  --text-step-title-lg: 1.375rem;            /* 22px */
-  --text-step-title-lg--line-height: 1.3;
-  --text-step-title-lg--letter-spacing: -0.01em;
-
-  --text-step-body: 1rem;                    /* 16px */
-  --text-step-body--line-height: 1.5;
-  --text-step-body-lg: 1.0625rem;            /* 17px */
-  --text-step-body-lg--line-height: 1.5;
-
-  /* Renamed from --text-card: `text-card` clashed with the `card` color */
-  --text-problem: 1.125rem;                  /* 18px: problem card text */
-  --text-problem--line-height: 1.45;
-  --text-problem-lg: 1.375rem;               /* 22px */
-  --text-problem-lg--line-height: 1.4;
-  --text-problem-lg--letter-spacing: -0.01em;
-
-  --text-benefit: 1.375rem;                  /* 22px */
-  --text-benefit--line-height: 1.35;
-  --text-benefit--letter-spacing: -0.015em;
-  --text-benefit-lg: 1.625rem;               /* 26px */
-  --text-benefit-lg--line-height: 1.32;
-  --text-benefit-lg--letter-spacing: -0.02em;
-
-  --text-story: clamp(1.5rem, 3.4vw, 2.5rem);        /* 24px at 390 */
-  --text-story--line-height: 1.3;
-  --text-story--letter-spacing: -0.02em;
-  --text-story-lg: clamp(1.5rem, 2.9vw, 2.625rem);   /* 42px at 1440 */
-  --text-story-lg--line-height: 1.26;
-  --text-story-lg--letter-spacing: -0.025em;
-
-  --text-cta: clamp(1.875rem, 4.6vw, 3.25rem);       /* 30px at 390 */
-  --text-cta--line-height: 1.1;
-  --text-cta--letter-spacing: -0.025em;
-  --text-cta-lg: clamp(1.875rem, 4.4vw, 4rem);       /* 64px at 1440 */
-  --text-cta-lg--line-height: 1.05;
-  --text-cta-lg--letter-spacing: -0.035em;
-
-  --text-hero: clamp(2.125rem, 6vw, 4rem);           /* 34px at 390 */
-  --text-hero--line-height: 1.1;
-  --text-hero--letter-spacing: -0.025em;
-  --text-hero-lg: clamp(3rem, 5.4vw, 4.5rem);        /* 72px at 1440 */
-  --text-hero-lg--line-height: 1.04;
-  --text-hero-lg--letter-spacing: -0.035em;
-
-  /* Layout */
-  --container-page: 75rem;        /* 1200px content width (max-w-page) */
-
-  /* Radii */
-  --radius-chip: 0.75rem;         /* 12px: list rows, note boxes */
-  --radius-field: 0.875rem;       /* 14px: search field, mini panels, icon tiles */
-  --radius-inner: 1rem;           /* 16px: inner cards (desktop 18px) */
-  --radius-card: 1.5rem;          /* 24px: cards, preview panel */
-  --radius-card-lg: 1.75rem;      /* 28px */
-  --radius-panel: 2rem;           /* 32px: final CTA panel */
-  --radius-panel-lg: 2.5rem;      /* 40px */
-
-  /* Shadows */
-  --shadow-cta: 0 10px 40px -10px rgb(164 147 255 / 0.7);
-  --shadow-cta-lg: 0 12px 48px -12px rgb(164 147 255 / 0.75);
-  --shadow-preview: 0 40px 120px -40px rgb(164 147 255 / 0.35);   /* desktop hero preview only */
-
-  /* Background glows (use as background-image) */
-  --glow-hero: radial-gradient(120% 640px at 50% 0%, rgb(164 147 255 / 0.28) 0%, rgb(13 10 24 / 0) 70%);
-  --glow-hero-lg: radial-gradient(70% 760px at 50% 0%, rgb(164 147 255 / 0.28) 0%, rgb(13 10 24 / 0) 70%);
-  --glow-cta: radial-gradient(90% 70% at 50% 100%, rgb(164 147 255 / 0.3) 0%, rgb(21 17 42 / 0) 70%);
-  --glow-cta-lg: radial-gradient(70% 80% at 50% 100%, rgb(164 147 255 / 0.32) 0%, rgb(21 17 42 / 0) 70%);
-
-  /* ---- Added during build: values from the mockup HTML not covered above ---- */
-
-  /* Button hover (approved): slightly lighter fill, stronger glow */
-  --color-accent-hover: #b3a6ff;
-  --shadow-cta-hover: 0 12px 44px -10px rgb(164 147 255 / 0.85);
-  --shadow-cta-lg-hover: 0 14px 52px -12px rgb(164 147 255 / 0.9);
-
-  /* Small UI text: logo, button, avatars, text inside illustrations.
-     No line-height on purpose: it stays `normal`, as in the mockup. */
+  --text-10: 0.625rem;            /* labels inside pictures */
+  --text-11: 0.6875rem;
   --text-12: 0.75rem;
   --text-13: 0.8125rem;
   --text-14: 0.875rem;
   --text-15: 0.9375rem;
   --text-16: 1rem;
-  --text-17: 1.0625rem;
-  --text-18: 1.125rem;
-  --text-19: 1.1875rem;
+  --text-22: 1.375rem;            /* "?" in the contact strip */
+  --text-24: 1.5rem;              /* avatar letters and names inside pictures */
 
-  --tracking-logo: -0.01em;       /* logo text */
-  --tracking-mask: 0.08em;        /* masked phone number */
+  --text-logo: 1.125rem;          /* 18px */
+  --text-logo-lg: 1.4375rem;      /* 23px */
 
-  /* Tilts of the three "Андрей" rows in the problem card */
-  --rotate-row-1: -1.2deg;
-  --rotate-row-2: 0.8deg;
-  --rotate-row-3: -0.6deg;
+  --text-hero: clamp(2.875rem, 7.2vw, 7rem);  /* 46px at 390, 104px at 1440 */
+  --text-hero--line-height: 0.95;
+  --text-hero--letter-spacing: -0.015em;
 
-  /* Radii used in the mockup next to the merged ones above */
-  --radius-mini: 0.625rem;        /* 10px: search and note in step 3 illustration */
-  --radius-inner-lg: 1.125rem;    /* 18px: inner cards on desktop, contact strip */
-  --radius-strip-lg: 1.25rem;     /* 20px: contact strip on desktop */
+  --text-lead: 1rem;              /* hero and CTA paragraph */
+  --text-lead--line-height: 1.65;
+  --text-lead-lg: 1.125rem;
+  --text-lead-lg--line-height: 1.65;
 
-  /* Logo icon line on desktop (the icon file itself uses 1.6) */
-  --stroke-width-logo-lg: 1.5;
+  --text-story: clamp(1.625rem, 3.3vw, 2.875rem); /* 26px at 390, 46px at 1440 */
+  --text-story--line-height: 1.2;
 
-  /* ---- Added later: demon head in the header and flames along the screen edges ---- */
-  /* The app (personal-crm, src/app/globals.css) has the same values */
+  --text-problem: 1.5rem;         /* problem card text */
+  --text-problem--line-height: 1.2;
+  --text-problem-lg: 1.875rem;
+  --text-problem-lg--line-height: 1.2;
 
-  --drop-shadow-demon: 0 0 8px rgb(164 147 255 / 0.55);   /* glow around the demon head */
-  --animate-flame-1: flame-flicker 3.8s ease-in-out infinite;
-  --animate-flame-2: flame-flicker 4.6s ease-in-out -1.6s infinite;
-  --animate-flame-3: flame-flicker 3.2s ease-in-out -0.8s infinite;
+  --text-numeral: 3.5rem;         /* Roman step numerals */
+  --text-numeral--line-height: 0.8;
+  --text-numeral-lg: 4.5rem;
+  --text-numeral-lg--line-height: 0.8;
 
-  @keyframes flame-flicker {
-    0%, 100% { transform: scaleY(1) skewX(0deg); opacity: 1; }
-    30% { transform: scaleY(0.93) skewX(-3deg); opacity: 0.8; }
-    65% { transform: scaleY(1.04) skewX(2deg); opacity: 0.95; }
+  --text-step-title: 1.5rem;
+  --text-step-title--line-height: 1.15;
+  --text-step-title-lg: 1.75rem;
+  --text-step-title-lg--line-height: 1.15;
+
+  --text-step-body: 0.9375rem;
+  --text-step-body--line-height: 1.6;
+
+  --text-benefit: 1.5rem;
+  --text-benefit--line-height: 1.25;
+  --text-benefit-lg: 1.75rem;
+  --text-benefit-lg--line-height: 1.25;
+
+  --text-cta: clamp(2.5rem, 5vw, 4.75rem);  /* 40px at 390, 72px at 1440 */
+  --text-cta--line-height: 1;
+
+  --text-note: 0.9375rem;         /* note text in the hero preview */
+  --text-note--line-height: 1.5;
+
+  --tracking-logo: 0.02em;
+  --tracking-heading: -0.015em;
+  --tracking-overline: 0.32em;    /* "С компьютера и с телефона", section headings */
+  --tracking-caps: 0.24em;        /* buttons */
+  --tracking-label: 0.2em;        /* labels inside pictures, masked phone */
+
+  /* Layout */
+  --container-page: 75rem;        /* 1200px content width (max-w-page) */
+
+  /* Radii: almost square corners, like cut stone and iron */
+  --radius-edge: 0.0625rem;       /* 1px: buttons */
+
+  /* Shadows */
+  --shadow-cta: 0 20px 50px -20px rgb(0 0 0 / 0.9);
+  --shadow-preview: 0 60px 120px -40px rgb(0 0 0 / 0.95);
+
+  /* Blurs of the glows and the fog */
+  --blur-glow: 40px;
+  --blur-glow-wide: 50px;
+  --blur-fog: 70px;
+  --blur-fog-far: 80px;
+  --blur-ember: 100px;
+  --blur-fade: 0.8px;             /* the most forgotten "Андрей" row */
+
+  /* Light (use as background-image) */
+  /* The hero: a little lighter in the middle, where the chandelier hangs.
+     Translucent, so the flames along the screen edges show through it. */
+  --glow-hero: radial-gradient(90% 70% at 50% 32%, rgb(255 236 236 / 0.058) 0%, rgb(255 236 236 / 0.012) 55%, rgb(255 236 236 / 0) 100%);
+  /* Warm light under the chandelier */
+  --glow-chandelier: radial-gradient(closest-side, rgb(255 160 80 / 0.16), rgb(255 120 50 / 0.05) 55%, rgb(255 120 50 / 0));
+  /* Warm light around a candle holder */
+  --glow-candle: radial-gradient(closest-side, rgb(255 160 80 / 0.2), rgb(255 120 50 / 0.06) 50%, rgb(255 120 50 / 0));
+  /* Far-off candlelight and a blood-red glow in the corners of sections */
+  --glow-warm: radial-gradient(closest-side, rgb(220 130 50 / 0.13), rgb(220 130 50 / 0));
+  --glow-blood: radial-gradient(closest-side, rgb(138 20 38 / 0.2), rgb(138 20 38 / 0));
+  --glow-warm-blood: radial-gradient(closest-side, rgb(220 130 50 / 0.13), rgb(138 20 38 / 0.07) 60%, rgb(138 20 38 / 0));
+  /* Embers glowing at the bottom of the final panel */
+  --glow-cta: radial-gradient(70% 90% at 50% 100%, rgb(120 50 20 / 0.24) 0%, rgb(17 15 15 / 0) 70%);
+  /* Film grain over the whole page: a small noise tile */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* Flames along the screen edges: slow smouldering */
+  --animate-flame-1: flame-smoulder 7s ease-in-out infinite;
+  --animate-flame-2: flame-smoulder 9s ease-in-out -3s infinite;
+  --animate-flame-3: flame-smoulder 6s ease-in-out -1.5s infinite;
+  /* Fog drifting from side to side */
+  --animate-fog: fog-drift 38s ease-in-out infinite;
+  --animate-fog-far: fog-drift 52s ease-in-out -20s infinite;
+
+  @keyframes flame-smoulder {
+    0%, 100% { transform: scaleY(1); opacity: 0.9; }
+    50% { transform: scaleY(0.94); opacity: 0.6; }
   }
+
+  @keyframes fog-drift {
+    0%, 100% { transform: translateX(-5%); }
+    50% { transform: translateX(5%); }
+  }
+}
+
+/*
+  Colors inside the candle holder drawings (src/components/candles/).
+  The drawings use them as var(--...) in SVG, not as Tailwind classes.
+*/
+:root {
+  --iron-dark: #0b0908;
+  --iron: #2b221c;
+  --iron-light: #3d3027;
+  --iron-shade: #211a15;
+  --iron-edge: #0a0807;
+  --iron-arm: #221b16;
+  --iron-chain: #251d18;
+  --iron-link: #0d0b0a;
+  --iron-rod: #1f1814;
+  --iron-band: #17120f;
+  --iron-pan: #1d1713;
+  --iron-collar: #241c17;
+  --rim-light: rgb(255 190 120 / 0.35);
+  --wax-dark: #2a2119;
+  --wax: #8a7860;
+  --wax-light: #a69378;
+  --wax-shade: #7a6953;
+  --wax-edge: #211913;
+  --wax-top: #c9b08a;
+  --wax-drip: #bfa47e;
+  --wax-lit: #ffd29a;
+  --flame-tip: #ff7b2e;
+  --flame-mid: #ff8a35;
+  --flame-body: #ffb35a;
+  --flame-base: #ffd69a;
+  --flame-root: #ffcf8a;
+  --flame-core: #fff6df;
+  --flame-core-base: #ffe2a8;
+  --flame-bloom: #ff9440;
+  --flame-blue: #4f6cff;
+  --wick: #24160d;
+  --halo: #ffb46a;
+  --halo-outer: #ff9a4a;
+  --specular: #ffbe7a;
+
+  /* Stone wall in the light of a candle holder */
+  --stone: rgb(210 180 150 / 0.035);
+  --stone-mortar: rgb(0 0 0 / 0.55);
+  --stone-lit: rgb(255 205 150 / 0.06);
+
+  /* Dust in the chandelier light */
+  --dust: rgb(255 214 170 / 0.85);
+  --dust-glow: rgb(255 180 110 / 0.45);
+
+  /* The gothic window outline behind the hero heading and the final heading */
+  --tracery: rgb(217 209 197 / 0.08);
 }

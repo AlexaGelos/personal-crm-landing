@@ -1,0 +1,9 @@
+---
+// Section heading (h2): small spaced capitals with a thin rule running to the right edge.
+// Used for "Как это работает" and "Что вы получаете".
+---
+
+<h2 class="flex items-center gap-5 text-12 font-medium tracking-overline text-ink-muted uppercase">
+  <span><slot /></span>
+  <span aria-hidden="true" class="h-px flex-1 bg-line"></span>
+</h2>

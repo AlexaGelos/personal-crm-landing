@@ -15,10 +15,11 @@ pnpm build    # готовая страница в папке dist/
 | Что | Где |
 |---|---|
 | Блоки страницы и тексты | `src/components/` |
+| Свечи, люстра, бра, канделябры, кладка, пыль | `src/components/candles/` |
 | Адрес приложения | `src/config.ts` |
 | Название вкладки и описание для поисковиков | `src/pages/index.astro` |
 | Цвета, шрифты, отступы (дизайн-токены) | `src/styles/tokens.css` |
-| Шрифт Onest | `public/fonts/` |
+| Шрифты Onest и Cormorant Garamond | `public/fonts/` |
 | Иконка во вкладке | `public/favicon.svg` |
 | Макет | `design/` |
 
