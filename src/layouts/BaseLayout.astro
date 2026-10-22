@@ -1,4 +1,5 @@
 ---
+import CursorLight from "../components/CursorLight.astro";
 import SideFlames from "../components/SideFlames.astro";
 import "../styles/global.css";
 
@@ -23,6 +24,7 @@ const { title, description } = Astro.props;
   </head>
   <body class="bg-page font-sans text-ink">
     <SideFlames />
+    <CursorLight />
     {/* Film grain over everything, like an old photograph */}
     <div aria-hidden="true" class="film-grain pointer-events-none fixed inset-0 z-40 opacity-6"></div>
     <slot />
